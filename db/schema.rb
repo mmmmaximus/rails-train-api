@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_04_085016) do
+ActiveRecord::Schema.define(version: 2021_01_04_065906) do
 
   create_table "trains", force: :cascade do |t|
     t.string "name"
     t.string "train_model_name"
     t.integer "number_of_cars"
     t.integer "max_weight_capacity"
+    t.boolean "active", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "active", default: false
   end
 
 end
