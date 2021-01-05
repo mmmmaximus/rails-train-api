@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :train do
     name { FFaker::Name.name }
     train_model_name { FFaker::Name.name }
-    number_of_cars { rand(10..20) }
+    number_of_cars { rand(1..20) }
     max_weight_capacity { rand(100..1000) }
     active
 
