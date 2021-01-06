@@ -52,8 +52,10 @@ describe 'Trains' do
 
   describe 'POST /v1/trains' do
     context 'with valid attributes' do
-      it 'returns http status 201' do
-        post v1_trains_path params: { train: expected_response }
+      it 'creates new train with valid attributes and returns http status 201' do
+        expect {
+          post v1_trains_path params: { train: expected_response }
+        }.to change(Train, :count).by(1)
         expect(response).to be_created
         expect(JSON.parse(response.body)).to eq({"message"=>"#{train.name} successfully created"})
       end
@@ -92,8 +94,10 @@ describe 'Trains' do
 
   describe 'PUT /v1/trains/1' do
     context 'with valid attributes' do
-      it 'returns http status 200' do
+      it 'updates train with valid attributes and returns http status 200' do
         put v1_train_path(train), params: { train: valid_attributes }
+        train.reload
+        expect(train.name).to eq(valid_attributes['name'])
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq({"message"=>"name successfully updated"})
       end
@@ -132,7 +136,9 @@ describe 'Trains' do
 
   describe 'DELETE /v1/trains/1' do
     it 'returns http status 200' do
-      delete v1_train_path(train)
+      expect {
+        delete v1_train_path(train)
+      }.to change(Train, :count).by(-1)
       expect(response).to be_ok
       expect(JSON.parse(response.body)).to eq({"message"=>"#{train.name} successfully deleted"})
     end
